@@ -140,38 +140,52 @@ else:
     col2.markdown("<div style='height:350px;background-color:#111b3a;border-radius:10px;display:flex;align-items:center;justify-content:center;color:#94a3b8;'>Detection result will appear here</div>", unsafe_allow_html=True)
 
 # ===========================
-# FOOTER SECTION
+# CUSTOM RESPONSIVE FOOTER
 # ===========================
 st.markdown("""
-<hr style="border-color:#1e293b;">
-<div style="display:flex;flex-wrap:wrap;justify-content:space-between;gap:20px;">
-
+<hr style="border-color:#1e293b;margin-top:40px;">
+<div style="
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 30px;
+    background-color: #0a1027;
+    padding: 40px 25px;
+    border-radius: 12px;
+    margin-top: 30px;
+">
+    <!-- Kolom 1: Info Model -->
     <div style="flex:1;min-width:250px;">
-        <h4>🚀 YOLOv8n Detection</h4>
-        <p>Advanced AI-powered object detection system specializing in car and bike recognition using state-of-the-art YOLOv8n technology.</p>
-    </div>
-
-    <div style="flex:1;min-width:250px;">
-        <h4>👩‍💻 Creator</h4>
-        <p><b>Name:</b> Jilan Putri</p>
-        <p><b>Role:</b> AI Developer / Data Scientist (Aamiin ya Allah)</p>
-        <p><b>Email:</b> jilanptr06@gmail.com</p>
-        <p><b>University:</b> Universitas Syiah Kuala</p>
-    </div>
-
-    <div style="flex:1;min-width:250px;">
-        <h4>🔗 Connect With Me</h4>
-        <p>
-            <a href="https://github.com/jilan20/Car-Bike-Detection" target="_blank">GitHub</a> ·
-            <a href="https://www.linkedin.com/in/jilan-putri-malisa" target="_blank">LinkedIn</a> ·
-            <a href="mailto:jilanptr06@gmail.com">Email</a>
+        <h4 style="color:#38bdf8;">🚀 YOLOv8n Detection</h4>
+        <p style="color:#e0e6f1;font-size:15px;">
+            Advanced AI-powered object detection system specializing in car and bike recognition using state-of-the-art YOLOv8n technology.
         </p>
-        <p style="font-size:13px;color:#64748b;">Built with Streamlit + YOLOv8n</p>
+    </div>
+
+    <!-- Kolom 2: Creator Info -->
+    <div style="flex:1;min-width:250px;">
+        <h4 style="color:#38bdf8;">👩‍💻 Creator</h4>
+        <p style="color:#e0e6f1;font-size:15px;margin-bottom:5px;"><b>Name:</b> Jilan Putri</p>
+        <p style="color:#e0e6f1;font-size:15px;margin-bottom:5px;"><b>Role:</b> AI Developer / Data Scientist <i>(Aamiin ya Allah)</i></p>
+        <p style="color:#e0e6f1;font-size:15px;margin-bottom:5px;"><b>Email:</b> <a href="mailto:jilanptr06@gmail.com" style="color:#38bdf8;text-decoration:none;">jilanptr06@gmail.com</a></p>
+        <p style="color:#e0e6f1;font-size:15px;margin-bottom:5px;"><b>University:</b> Universitas Syiah Kuala</p>
+    </div>
+
+    <!-- Kolom 3: Sosial Media -->
+    <div style="flex:1;min-width:250px;">
+        <h4 style="color:#38bdf8;">🔗 Connect With Me</h4>
+        <p style="font-size:15px;">
+            <a href="https://github.com/jilan20/Car-Bike-Detection" target="_blank" style="color:#38bdf8;text-decoration:none;">GitHub</a> ·
+            <a href="https://www.linkedin.com/in/jilan-putri-malisa" target="_blank" style="color:#38bdf8;text-decoration:none;">LinkedIn</a> ·
+            <a href="mailto:jilanptr06@gmail.com" style="color:#38bdf8;text-decoration:none;">Email</a>
+        </p>
+        <p style="font-size:13px;color:#94a3b8;margin-top:20px;">Built with ❤️ using Streamlit + YOLOv8n</p>
     </div>
 </div>
 
-<hr style="border-color:#1e293b;">
+<!-- Copyright -->
+<hr style="border-color:#1e293b;margin-top:40px;">
 <div style="text-align:center;color:#64748b;font-size:13px;">
-    © 2025 Jilan Putri. All rights reserved. | Version 1.0.0
+    © 2025 <b>Jilan Putri</b>. All rights reserved. | Version 1.0.0
 </div>
 """, unsafe_allow_html=True)
