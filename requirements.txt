@@ -1,7 +1,9 @@
-streamlit==1.50.0
-ultralytics==8.0.0
-tensorflow==2.20.0
-opencv-python-headless==4.8.1.78
-pillow==11.3.0
-pandas==2.3.3
-numpy==2.3.4
+streamlit==1.37.1
+ultralytics==8.2.95
+torch
+torchvision
+pandas
+numpy
+Pillow
+opencv-python-headless
+datetime
