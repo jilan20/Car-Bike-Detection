@@ -1,9 +1,7 @@
-streamlit
-tensorflow
-ultralytics
-torch
-numpy
-matplotlib
-pillow
-opencv-python-headless
-pandas
+streamlit==1.50.0
+ultralytics==8.0.0
+tensorflow==2.20.0
+opencv-python-headless==4.8.1.78
+pillow==11.3.0
+pandas==2.3.3
+numpy==2.3.4
