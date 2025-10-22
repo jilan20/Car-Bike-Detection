@@ -85,7 +85,7 @@ col1, col2 = st.columns(2)
 if uploaded_file is not None and classify_btn:
     image = Image.open(uploaded_file)
     col1.subheader("🖼️ Original Image")
-    col1.image(image, use_container_width=True)
+    col1.image(image, use_column_width=True)
 
     model = YOLO("best.pt")
     results = model.predict(image, conf=conf)
@@ -93,7 +93,7 @@ if uploaded_file is not None and classify_btn:
     annotated_img = results[0].plot()
 
     col2.subheader("📸 Detection Result")
-    col2.image(annotated_img, use_container_width=True)
+    col2.image(annotated_img, use_column_width=True)
 
     # Extract detection data
     data = []
