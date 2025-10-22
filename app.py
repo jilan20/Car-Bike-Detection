@@ -1,9 +1,7 @@
 import streamlit as st
 from ultralytics import YOLO
 import pandas as pd
-import numpy as np
 from PIL import Image
-import io
 from datetime import datetime
 
 # ===========================
@@ -16,27 +14,35 @@ st.set_page_config(
 )
 
 # ===========================
-# CUSTOM CSS STYLE
+# CUSTOM STYLING
 # ===========================
 st.markdown("""
-    <style>
-        .main {background-color: #0d1733;}
-        div[data-testid="stSidebar"] {background-color: #0a1027;}
-        h1, h2, h3, h4, h5, h6, p, label, span {
-            color: #e0e6f1 !important;
-        }
-        .metric {background-color: #111b3a; border-radius: 10px; padding: 15px;}
-        .block-container {padding-top: 2rem;}
-        .stButton>button {
-            background-color: #0ea5e9;
-            color: white;
-            font-weight: bold;
-            border-radius: 8px;
-            border: none;
-            transition: all 0.3s;
-        }
-        .stButton>button:hover {background-color: #0284c7;}
-    </style>
+<style>
+    .main {background-color: #0d1733;}
+    div[data-testid="stSidebar"] {background-color: #0a1027;}
+    h1, h2, h3, h4, h5, h6, p, label, span {color: #e0e6f1 !important;}
+    .metric {background-color: #111b3a; border-radius: 10px; padding: 15px;}
+    .block-container {padding-top: 2rem;}
+    .stButton>button {
+        background-color: #0ea5e9;
+        color: white;
+        font-weight: bold;
+        border-radius: 8px;
+        border: none;
+        transition: all 0.3s;
+    }
+    .stButton>button:hover {background-color: #0284c7;}
+    footer {visibility: hidden;}
+    .footer-container {
+        background-color: #0a1027;
+        padding: 30px;
+        border-top: 1px solid #1e293b;
+        margin-top: 50px;
+        color: #e0e6f1;
+    }
+    .footer-container a {color: #38bdf8; text-decoration: none;}
+    .footer-container a:hover {text-decoration: underline;}
+</style>
 """, unsafe_allow_html=True)
 
 # ===========================
@@ -54,39 +60,47 @@ with st.sidebar:
     mode = st.radio("Mode Detection", ["Image", "Video"])
 
     uploaded_file = st.file_uploader("Upload Image", type=["jpg", "jpeg", "png"])
-    st.markdown("> 💡 **Tips for usage**\n- Image must be clear and well-lit.\n- Adjust confidence threshold as needed.\n- Ensure objects are clearly visible.")
-    
+
+    st.markdown("""
+    ### 💡 Usage Tips
+    - Use clear, high-quality images  
+    - Adjust confidence threshold for accuracy  
+    - Ensure objects are clearly visible  
+    - Best results with good lighting
+    """)
     classify_btn = st.button("🚀 Classify Now")
 
 # ===========================
-# MAIN CONTENT
+# MAIN HEADER
 # ===========================
-st.markdown(f"<h1 style='text-align:center;'>🚗🏍️ Car & Bike Object Detection with AI</h1>", unsafe_allow_html=True)
+st.markdown("<h1 style='text-align:center;'>🚗🏍️ Car & Bike Object Detection</h1>", unsafe_allow_html=True)
 st.markdown("<p style='text-align:center;'>Revolutionary fast detection using YOLOv8n technology</p>", unsafe_allow_html=True)
 st.markdown("<div style='text-align:center;'><button style='background-color:#0ea5e9;color:white;border:none;border-radius:8px;padding:8px 20px;'>Try Now</button></div>", unsafe_allow_html=True)
 
+# ===========================
+# IMAGE DISPLAY AREA
+# ===========================
 col1, col2 = st.columns(2)
+
 if uploaded_file is not None and classify_btn:
     image = Image.open(uploaded_file)
     col1.subheader("🖼️ Original Image")
     col1.image(image, use_container_width=True)
 
-    # Load YOLO model
     model = YOLO("best.pt")
     results = model.predict(image, conf=conf)
     boxes = results[0].boxes
-
-    # Annotated image
     annotated_img = results[0].plot()
+
     col2.subheader("📸 Detection Result")
     col2.image(annotated_img, use_container_width=True)
 
-    # Extract detection info
+    # Extract detection data
     data = []
     for box in boxes:
         cls = model.names[int(box.cls)]
         conf_score = float(box.conf)
-        xywh = box.xywh[0].tolist()
+        xywh = [round(x, 1) for x in box.xywh[0].tolist()]
         data.append([cls, conf_score, xywh])
 
     df = pd.DataFrame(data, columns=["Class", "Confidence", "Bounding Box"])
@@ -105,12 +119,12 @@ if uploaded_file is not None and classify_btn:
     c3.metric("📦 TOTAL", f"{total_count}", "Objects Detected")
 
     # ===========================
-    # DETECTION DETAILS
+    # DETECTION DETAILS TABLE
     # ===========================
     st.markdown("### 📝 Detection Details")
     st.dataframe(df, use_container_width=True)
 
-    # Download CSV report
+    # Download CSV
     csv = df.to_csv(index=False).encode('utf-8')
     st.download_button(
         label="⬇️ Download Report (CSV)",
@@ -120,10 +134,45 @@ if uploaded_file is not None and classify_btn:
     )
 
 else:
-    # Initial state (before upload)
     col1.subheader("🖼️ Original Image")
-    col1.image("https://via.placeholder.com/600x350?text=Upload+an+image+to+start+detection", use_container_width=True)
-
+    col1.markdown("<div style='height:350px;background-color:#111b3a;border-radius:10px;display:flex;align-items:center;justify-content:center;color:#94a3b8;'>Upload an image to start detection</div>", unsafe_allow_html=True)
     col2.subheader("📸 Detection Result")
-    col2.image("https://via.placeholder.com/600x350?text=Detection+result+will+appear+here", use_container_width=True)
+    col2.markdown("<div style='height:350px;background-color:#111b3a;border-radius:10px;display:flex;align-items:center;justify-content:center;color:#94a3b8;'>Detection result will appear here</div>", unsafe_allow_html=True)
 
+# ===========================
+# FOOTER SECTION
+# ===========================
+st.markdown("""
+<div class="footer-container">
+    <div style="display:flex;justify-content:space-between;flex-wrap:wrap;">
+
+        <div style="flex:1;min-width:250px;">
+            <h4>🚀 YOLOv8n Detection</h4>
+            <p>Advanced AI-powered object detection system specializing in car and bike recognition using state-of-the-art YOLOv8n technology.</p>
+        </div>
+
+        <div style="flex:1;min-width:250px;">
+            <h4>👩‍💻 Creator</h4>
+            <p><b>Name:</b> Jilan Putri</p>
+            <p><b>Role:</b> AI Developer / Data Scientist (Aamiin ya Allah)</p>
+            <p><b>Email:</b> jilanptr06@gmail.com</p>
+            <p><b>University:</b> Universitas Syiah Kuala</p>
+        </div>
+
+        <div style="flex:1;min-width:250px;">
+            <h4>🔗 Connect With Me</h4>
+            <p>
+                <a href="https://github.com/jilan20/Car-Bike-Detection" target="_blank">GitHub</a> ·
+                <a href="www.linkedin.com/in/jilan-putri-malisa" target="_blank">LinkedIn</a> ·
+                <a href="mailto:jilanputri@mhs.usk.com">Email</a>
+            </p>
+            <p style="font-size:13px;color:#64748b;">Built with Streamlit + YOLOv8n</p>
+        </div>
+    </div>
+
+    <hr style="border-color:#1e293b;">
+    <div style="text-align:center;color:#64748b;font-size:13px;">
+        © 2025 Jilan Putri. All rights reserved. | Version 1.0.0
+    </div>
+</div>
+""", unsafe_allow_html=True)
