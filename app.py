@@ -4,7 +4,6 @@ import tensorflow as tf
 from tensorflow.keras.preprocessing import image
 import numpy as np
 from PIL import Image
-import cv2
 import pandas as pd
 from datetime import datetime
 
@@ -22,9 +21,13 @@ st.set_page_config(
 # ==========================
 @st.cache_resource
 def load_models():
-    yolo_model = YOLO("model/best.pt")  # Model deteksi objek (sesuai directory Anda)
-    classifier = tf.keras.models.load_model("model/classifier_model.h5")  # Model klasifikasi (sesuai directory Anda)
-    return yolo_model, classifier
+    try:
+        yolo_model = YOLO("model/best.pt")  # Model deteksi objek (sesuai directory Anda)
+        classifier = tf.keras.models.load_model("model/classifier_model.h5")  # Model klasifikasi (sesuai directory Anda)
+        return yolo_model, classifier
+    except Exception as e:
+        st.error(f"Error loading models: {e}")
+        return None, None
 
 yolo_model, classifier = load_models()
 
@@ -102,7 +105,7 @@ with col1:
 
 with col2:
     st.markdown("**HASIL**")
-    if uploaded_file is not None:
+    if uploaded_file is not None and yolo_model is not None and classifier is not None:
         if mode == "Deteksi Objek (YOLO)":
             # Deteksi objek menggunakan YOLO
             results = yolo_model(img, conf=confidence)
