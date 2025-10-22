@@ -1,3 +1,7 @@
+import os
+os.environ['CV2_HEADLESS'] = '1'  # Paksa OpenCV headless sebelum import apa pun
+os.environ['OPENCV_OPENCL_RUNTIME'] = 'disabled'  # Nonaktifkan OpenCL untuk menghindari error
+
 import streamlit as st
 from ultralytics import YOLO
 import tensorflow as tf
@@ -12,7 +16,8 @@ from datetime import datetime
 # ==========================
 st.set_page_config(
     page_title="Deteksi Objek Car & Bike",
-    layout="wide"
+    layout="wide",
+    theme="dark"  # Tema dark untuk tampilan yang menarik
 )
 
 # ==========================
@@ -85,7 +90,7 @@ with st.sidebar:
 # ==========================
 # Bagian Utama
 # ==========================
-st.markdown("🚗🏍️ **Deteksi Objek Car & Bike**")
+st.markdown("🚗🏍️ **Deteksi Objek Car & Bike dengan AI**")
 st.markdown("Revolusi deteksi cepat menggunakan YOLOv8n.")
 
 # Tombol Coba Sekarang
