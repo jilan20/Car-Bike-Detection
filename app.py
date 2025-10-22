@@ -86,7 +86,7 @@ with st.sidebar:
 # ==========================
 # Bagian Utama
 # ==========================
-st.markdown("🚗🏍️ **Deteksi Objek Car & Bike dengan AI**")
+st.markdown("🚗🏍️ **Deteksi Objek Car & Bike**")
 st.markdown("Revolusi deteksi cepat menggunakan YOLOv8n.")
 
 # Tombol Coba Sekarang
