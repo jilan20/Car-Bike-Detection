@@ -12,8 +12,7 @@ from datetime import datetime
 # ==========================
 st.set_page_config(
     page_title="Deteksi Objek Car & Bike",
-    layout="wide",
-    theme="dark"  # Tema dark untuk tampilan yang menarik
+    layout="wide"
 )
 
 # ==========================
